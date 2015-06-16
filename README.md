@@ -26,6 +26,6 @@ Raspbian should soon be available to install via the Slice 'NOOBS' installer, ho
 1. Flash Slice with the latest Raspberry Pi Raspbian release (currently 2015-05-05).
 2. Follow the process above and build and install the Linux kernel, modules and device tree files to Slice.
 3. grab the FiveNinjas/slice-firmware repository and compile dt-blob.bin, copy this to the root of the Slice boot partition (first FAT partition).
-4. The latest BCM270x firmware is required, grab [start.elf](https://github.com/raspberrypi/firmware/tree/master/boot/start.elf) and [bcm2708_rpi_cm.dtb](https://github.com/raspberrypi/firmware/tree/master/boot/bcm2708_rpi_cm.dtb) from https://github.com/raspberrypi/firmware/tree/master/boot and copy them to the Slice boot partition (NB on future releases of Rasbian this step should not be necessary).
+4. The latest BCM270x firmware is required, grab start.elf and bcm2708-rpi-cm.dtb from the /boot folder in https://github.com/raspberrypi/firmware/ and copy them to the Slice boot partition (NB on future releases of Rasbian this step should not be necessary).
 5. Edit config.txt on the Slice boot partition and add the line dtoverlay=slice to add the Slice DT overlay which enables the RTC, IR and Audio.
 6. Slice should now boot into Raspbian with all peripheral drivers loaded.
