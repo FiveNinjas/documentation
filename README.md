@@ -21,9 +21,9 @@ The only difference is that you need to use slice2708_defconfig and not bcmrpi_d
 
 ## Installing Raspbian
 
-Raspbian should soon be available to install via the Slice 'NOOBS' installer, however if you want to roll your own now (and flash directly to Slice wiping everything else) here are the basic steps:
+Here are the basic steps to install Raspbian:
 
-1. Flash Slice with the latest Raspberry Pi Raspbian release (currently 2015-05-05).
+1. Flash Slice with the latest Raspberry Pi Raspbian image (currently 2015-05-05).
 2. Follow the process above and build and install the Linux kernel, modules and device tree files to Slice.
 3. grab the FiveNinjas/slice-firmware repository and compile dt-blob.bin, copy this to the root of the Slice boot partition (first FAT partition).
 4. The latest BCM270x firmware is required, grab start.elf and bcm2708-rpi-cm.dtb from the /boot folder in https://github.com/raspberrypi/firmware/ and copy them to the Slice boot partition (NB on future releases of Rasbian this step should not be necessary).
