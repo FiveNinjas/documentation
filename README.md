@@ -29,3 +29,4 @@ Here are the basic steps to install Raspbian:
 4. The latest BCM270x firmware is required, grab start.elf and bcm2708-rpi-cm.dtb from the /boot folder in https://github.com/raspberrypi/firmware/ and copy them to the Slice boot partition (NB on future releases of Rasbian this step should not be necessary).
 5. Edit config.txt on the Slice boot partition and add the line dtoverlay=slice to add the Slice DT overlay which enables the RTC, IR and Audio.
 6. Slice should now boot into Raspbian with all peripheral drivers loaded.
+7. Once booted into Raspbian firstly copy your /boot/kernel.img to e.g. /boot/kernel-slice.img, then do an rpi-update to update all of the firmware files, then copy back the /boot/kernel-slice.img to /boot/kernel.img (as the firmware updater will overwrite the kernel with it's own non-slice version).
