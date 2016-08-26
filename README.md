@@ -20,24 +20,9 @@ After you have done this your Slice will boot to a prompt but USB and Ethernet w
 1. Repeat the instructions above to run rpiboot to convert the Slice into a Mass storage device to gain access to the flash, when you have done this the Slice's first FAT32 directory should appear as a new drive and contain files such as 'bootcode.bin' and 'start.elf'
 2. If you backed up your Slice directory first then you could access the dt-blob.bin that came with your Slice.  You can download it from the updates site [here](http://updates.fiveninjas.com/slice/dt-blob.bin) or build it yourself using the [sources](https://github.com/FiveNinjas/LibreELEC.tv/tree/master/distributions/Slice/config)
 3. Copy dt-blob.bin into the FAT32 partition of the flash, so it is alongside config.txt
-4. Eject the drive and then reboot Slice
+4. Eject the drive and then reboot Slice 
+
+Now when you boot, the USB and Ethernet should work, but there is no support in the kernel for the audio codec or the LEDs and the RTC has not been enabled.  That's next!
 
 ## Linux Kernel
 
-FiveNinjas/linux contains a fork of the Raspberry Pi Linux tree. Slice specific branches are prefixed with slice- (as of this writing the default branch is slice-4.0.y).
-
-To build (and install) the kernel follow the instructions for building a Raspberry Pi kernel [here](https://github.com/raspberrypi/documentation/blob/master/linux/kernel/building.md)
-
-The only difference is that you need to use slice2708_defconfig and not bcmrpi_defconfig and make sure to clone the FiveNinjas Linux repository (https://github.com/FiveNinjas/linux.git) rather than the Raspberry Pi one.
-
-## Installing Raspbian
-
-Here are the basic steps to install Raspbian:
-
-1. Flash Slice with the latest Raspberry Pi Raspbian image (currently 2015-05-05).
-2. Follow the process above and build and install the Linux kernel, modules and device tree files to Slice.
-3. grab the FiveNinjas/slice-firmware repository and compile dt-blob.bin, copy this to the root of the Slice boot partition (first FAT partition).
-4. The latest BCM270x firmware is required, grab start.elf and bcm2708-rpi-cm.dtb from the /boot folder in https://github.com/raspberrypi/firmware/ and copy them to the Slice boot partition (NB on future releases of Rasbian this step should not be necessary).
-5. Edit config.txt on the Slice boot partition and add the line dtoverlay=slice to add the Slice DT overlay which enables the RTC, IR and Audio.
-6. Slice should now boot into Raspbian with all peripheral drivers loaded.
-7. Once booted into Raspbian firstly copy your /boot/kernel.img to e.g. /boot/kernel-slice.img, then do an rpi-update to update all of the firmware files, then copy back the /boot/kernel-slice.img to /boot/kernel.img (as the firmware updater will overwrite the kernel with it's own non-slice version).
