@@ -26,3 +26,40 @@ Now when you boot, the USB and Ethernet should work, but there is no support in 
 
 ## Linux Kernel
 
+To build the linux kernel you'll need to get the kernel patch from the main Slice LibreELEC distribution and apply it to the upstream Raspberry Pi kernel.
+
+First using either the Slice box, a Raspberry Pi or (much better) cross compile on a linux PC, check out the linux sources:
+
+    $ git clone https://github.com/raspberrypi/linux
+
+Next grab the patch from the sources [here](https://github.com/FiveNinjas/LibreELEC.tv/tree/master/projects/Slice/patches/linux) you'll need patches 2 and 3.
+
+Apply the patches to the linux kernel:
+
+    $ cd linux
+    $ patch -p1 -m < linux-02-Slice.patch
+    $ patch -p1 -m < linux-03-cs4265.patch
+
+The patches may not apply cleanly (the output will have something like "NOT MERGED" in it) but the -m flag will make patch insert conflict markers.  Just edit the files it had trouble with and fix...  In general this is the Kconfig and Makefiles for the sound soc hardware, all we're trying to do is add the extra blocks for the slice drivers, directly reading the patch should help understand the change required.
+
+Next you need to refer to the [Raspberry Pi documentation](https://www.raspberrypi.org/documentation/linux/kernel/building.md) for building the kernel (or cross compiling it), based on cross compiling with a toolchain on the path I use:
+
+    ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make bcmrpi_defconfig
+    ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make menuconfig
+
+Then you need to enable the following drivers:
+    SND_SOC_CS4265=m
+    SND_BCM2708_SOC_SLICE=m
+    BCM2835_WS2812=m
+    
+Hint: You can search for them by typing [/] then 'CS4265' and [Enter], it'll find a match and put a little number in brackets by it, press that number to quickly move to the item
+
+Next build the kernel, the modules and dtb files
+
+    ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- INSTALL_MOD_PATH=root make zImage dtbs modules -j12
+
+Finally you need to follow instructions from the Raspberry Pi documentation to copy the files across, I'd suggest you boot the Slice and log in there and copy the files over the network, if you nfs mount the filesystem then you can actually do the following to install the modules to /lib/modules
+
+    sudo make modules_install
+    
+From within the linux tree, don't also forget to run scripts/mkkrnlimg on the kernel and copy it over /boot/kernel.img and copy across all the dtb* files from arch/arm/boot/dts/ and arch/arm/boot/dts/overlays into /boot
