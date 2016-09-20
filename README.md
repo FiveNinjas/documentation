@@ -18,7 +18,7 @@ Once you have used the above rpiboot software to convert the Slice into a mass s
 After you have done this your Slice will boot to a prompt but USB and Ethernet will not work.  So you have to add a dt-blob.bin to the first (FAT32) partition of the flash.
 
 1. Repeat the instructions above to run rpiboot to convert the Slice into a Mass storage device to gain access to the flash, when you have done this the Slice's first FAT32 directory should appear as a new drive and contain files such as 'bootcode.bin' and 'start.elf'
-2. If you backed up your Slice directory first then you could access the dt-blob.bin that came with your Slice.  You can download it from the updates site [here](http://updates.fiveninjas.com/slice/dt-blob.bin) or build it yourself using the [sources](https://github.com/FiveNinjas/LibreELEC.tv/tree/master/distributions/Slice/config)
+2. If you backed up your Slice directory first then you could access the dt-blob.bin that came with your Slice.  You can download it from the updates site [here](http://updates.fiveninjas.com/slice/dt-blob.bin) or build it yourself using the [sources](https://github.com/FiveNinjas/LibreELEC.tv.old/tree/master/distributions/Slice/config)
 3. Copy dt-blob.bin into the FAT32 partition of the flash, so it is alongside config.txt
 4. Eject the drive and then reboot Slice 
 
@@ -32,7 +32,7 @@ First using either the Slice box, a Raspberry Pi or (much better) cross compile 
 
     $ git clone https://github.com/raspberrypi/linux
 
-Next grab the patch from the sources [here](https://github.com/FiveNinjas/LibreELEC.tv/tree/master/projects/Slice/patches/linux) you'll need patches 2 and 3.
+Next grab the patch from the sources [here](https://github.com/FiveNinjas/LibreELEC.tv.old/tree/master/projects/Slice/patches/linux) you'll need patches 2 and 3.
 
 Apply the patches to the linux kernel:
 
